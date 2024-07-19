@@ -1,0 +1,11 @@
+body {
+  font-family: Satoshi-Regular;
+}
+
+.bg-primary {
+  background-color: #004aad;
+}
+
+.text-primary {
+  color: #004aad;
+}
