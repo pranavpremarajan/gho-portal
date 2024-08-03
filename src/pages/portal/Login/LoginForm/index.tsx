@@ -3,9 +3,17 @@ import { LoginSchema } from "@/schema/auth";
 import FormInput from "@/components/FormInput";
 import { useLoginMutation } from "@/services/auth";
 import FormButton from "@/components/FormButton";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import config from "@/config";
 
 const LoginForm = () => {
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading, isSuccess }] = useLoginMutation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess) navigate(config.navigation.otp);
+  }, [isSuccess]);
 
   return (
     <Formik
@@ -18,7 +26,7 @@ const LoginForm = () => {
         login(values);
       }}
     >
-      {({ errors, touched, values, handleChange,handleSubmit }) => (
+      {({ errors, touched, values, handleChange, handleSubmit }) => (
         <Form className="w-full max-w-sm bg-white p-8" onSubmit={handleSubmit}>
           <div className="text-xl font-medium">Login to continue</div>
           <FormInput
@@ -50,6 +58,11 @@ const LoginForm = () => {
           <FormButton loading={isLoading} type="submit">
             Login
           </FormButton>
+
+          <div className="text-xs py-2">
+            Dont have an account?{" "}
+            <span className="font-bold cursor-pointer"><Link to={config.navigation.signup}>Sign Up</Link></span>
+          </div>
         </Form>
       )}
     </Formik>

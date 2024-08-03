@@ -19,6 +19,13 @@ export const SignUpSchema = yup.object().shape({
   mobile: yup.string().required("Mobile is required"),
 });
 
+export const OTPSchema = yup.object().shape({
+  otp: yup
+    .string()
+    .required("OTP is required")
+    .matches(/^\d{6}$/gm, "Invalid OTP Format"),
+});
+
 export const ChangePasswordSchema = yup.object().shape({
   currentPassword: yup.string().required("Current Password is required"),
   newPassword: yup.string().required("New Password is required"),

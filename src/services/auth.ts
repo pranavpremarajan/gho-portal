@@ -7,9 +7,35 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
-        url: "/login",
+        url: "/",
         method: "POST",
-        body: data,
+        body: {
+          Token: "",
+          Prokey: "",
+          Tags: [
+            {
+              T: "dk1",
+              V: data.email,
+            },
+            {
+              T: "dk2",
+              V: data.password,
+            },
+
+            {
+              T: "Action",
+              V: "LOGIN",
+            },
+            {
+              T: "src",
+              V: "WEB",
+            },
+            {
+              T: "c10",
+              V: "0",
+            },
+          ],
+        },
       }),
     }),
 
@@ -95,6 +121,41 @@ export const authApi = createApi({
       }),
     }),
 
+    profile: builder.mutation({
+      query: () => ({
+        url: "/",
+        method: "POST",
+        body: {
+          Token: "",
+          Prokey: "",
+          Tags: [
+            {
+              T: "dk1",
+              V: "",
+            },
+            {
+              T: "dk2",
+              V: "",
+            },
+
+            {
+              T: "Action",
+              V: "PROFILE",
+            },
+
+            {
+              T: "src",
+              V: "WEB",
+            },
+            {
+              T: "c10",
+              V: "0",
+            },
+          ],
+        },
+      }),
+    }),
+
     changePassword: builder.mutation({
       query: (data) => ({
         url: "/change-password",
@@ -109,5 +170,5 @@ export const {
   useLoginMutation,
   useSignupMutation,
   useChangePasswordMutation,
-  useVerifyOTPMutation
+  useVerifyOTPMutation,
 } = authApi;

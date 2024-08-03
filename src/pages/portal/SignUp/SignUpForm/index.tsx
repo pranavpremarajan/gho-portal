@@ -3,9 +3,17 @@ import { SignUpSchema } from "@/schema/auth";
 import FormInput from "@/components/FormInput";
 import { useSignupMutation } from "@/services/auth";
 import FormButton from "@/components/FormButton";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import config from "@/config";
 
 const SignUpForm = () => {
-  const [signup, { isLoading, isError }] = useSignupMutation();
+  const [signup, { isLoading, isError, isSuccess, data }] = useSignupMutation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess) navigate(`${config.navigation.otp}`);
+  }, [isSuccess]);
 
   return (
     <Formik
@@ -90,6 +98,13 @@ const SignUpForm = () => {
           <FormButton loading={isLoading} type="submit">
             Sign Up
           </FormButton>
+
+          <div className="text-xs py-2">
+            Already have an account?{" "}
+            <span className="font-bold cursor-pointer">
+              <Link to={config.navigation.login}>Log In</Link>
+            </span>
+          </div>
         </Form>
       )}
     </Formik>

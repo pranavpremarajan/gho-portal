@@ -29,7 +29,7 @@ const FormInput = ({
 }: FormInputProps) => {
   return (
     <div className="my-2">
-      <label htmlFor={id} className="block mb-1 text-gray-600 text-sm" dir={direction}>
+      <label htmlFor={id} className="block mb-1 text-gray-600 text-sm font-bold" dir={direction}>
         {label}
       </label>
       <Input
@@ -41,7 +41,7 @@ const FormInput = ({
         dir={direction}
         {...rest}
       />
-      <div className={`text-xs my-1 ${error ? "text-red-600" : ""}`}>
+      <div className={`text-xs my-2 ${error ? "text-red-600" : ""}`}>
         {helperText}
       </div>
     </div>

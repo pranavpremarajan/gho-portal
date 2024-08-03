@@ -20,7 +20,6 @@ import { AddMedicationSchema } from "@/schema/review";
 import AudioRecorder from "@/components/AudioRecorder";
 import Dragger from "antd/es/upload/Dragger";
 import AddMedicalSummaryModal from "./AddMedicalSummaryModal";
-import TextArea from "antd/es/input/TextArea";
 
 const CreateReviewPage = () => {
   const SpecialitiesSection = () => {
