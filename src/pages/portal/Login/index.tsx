@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import LoginForm from "./LoginForm";
 import AuthPage from "../Auth";
 
 const LoginPage: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
   return (
     <>
       <AuthPage>

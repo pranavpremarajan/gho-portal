@@ -26,7 +26,7 @@ const AddMedicalSummaryModal: React.FC<Props> = ({
 
   return (
     <Modal
-      visible={open}
+      open={open}
       centered
       title="Add Medical / Diagnosis Summary"
       onOk={() => {

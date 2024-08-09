@@ -23,21 +23,22 @@ const FormSelect = ({
   error,
   value,
   className,
+  onChange,
   ...rest
 }: FormSelectProps) => {
   return (
     <div className="my-2 w-full">
-      <label htmlFor={id} className="block mb-1 text-gray-600 text-sm">
+      <label htmlFor={id} className="block mb-1 text-gray-600 text-sm font-bold">
         {label}
       </label>
       <Select
         id={id}
         className={`${className}`}
         placeholder={placeholder}
+        onChange={onChange}
         {...rest}
-       
       />
-      <div className={`text-xs my-1 ${error ? "text-red-600" : ""}`}>
+      <div className={`text-xs my-2 ${error ? "text-red-600" : ""}`}>
         {helperText}
       </div>
     </div>

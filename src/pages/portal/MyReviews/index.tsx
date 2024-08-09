@@ -1,39 +1,52 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { useGetMyReviewsQuery } from "@/services/review";
-import ReviewCard from "./ReviewCard";
-import NoReviewsFound from "./NoReviewsFound";
-import ErrorLoadingData from "./ErrorLoadingData";
-import { Review } from "@/types/review";
 import FullpageLoader from "@/components/FullpageLoader";
 import { Link } from "react-router-dom";
 import config from "@/config";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import ReviewCard from "./ReviewCard";
 
 const MyReviewsPage = () => {
-  const { data, isLoading, isError, isSuccess } = useGetMyReviewsQuery({});
+  const { isLoading } = useGetMyReviewsQuery({});
   return (
     <DashboardLayout
       title="My Reviews"
       breadCrumbItems={[]}
       loading={isLoading}
     >
-      <div className="flex justify-end">
-        <Link to={config.navigation.createReview}>
-          <button className="bg-primary text-white p-2 my-2 flex items-center">
-            <PlusIcon className="h-5"/> Create Review
-          </button>
-        </Link>
-      </div>
-      {isSuccess && data?.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {data?.map((review: Review) => (
-            <ReviewCard review={review} />
-          ))}
+      {/* {
+        <div className="flex justify-center py-3">
+          There are no reviews created
         </div>
-      )}
+      } */}
 
-      {isSuccess && data?.length == 0 && <NoReviewsFound />}
-      {isError && <ErrorLoadingData />}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10">
+        <Link to={config.navigation.createReview}>
+          <div className="bg-white hover:scale-105 duration-100 w-full h-full flex items-center justify-center min-h-[250px]">
+            <div>
+              <div className="flex justify-center">
+                <div className="bg-blue-100 rounded-full p-5 h-20 w-20">
+                  <div className="bg-blue-800 rounded-full">
+                    <PlusIcon className="text-white" />
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-center my-3">
+                <button className="text-blue-700 text-sm border-2 border-blue-700 p-1 px-3 rounded-full">
+                  Create New Review
+                </button>
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        <ReviewCard
+          review={{
+            caseID: "7854622163",
+          }}
+        />
+      </div>
+
       {isLoading && <FullpageLoader />}
     </DashboardLayout>
   );

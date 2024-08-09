@@ -11,7 +11,7 @@ const AudioRecorder: React.FC = () => {
   const mediaStream = useRef<MediaStream | null>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const chunks = useRef<Blob[]>([]);
-  const audioRef = useRef<HTMLAudioElement>(null); // Assign the correct type for audioRef
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [recording, setRecording] = useState(false);
   const [playing, setPlaying] = useState(false);
 

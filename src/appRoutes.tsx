@@ -4,12 +4,12 @@ import FullpageLoader from "./components/FullpageLoader";
 import { RouteObject } from "react-router-dom";
 import MyReviewsPage from "./pages/portal/MyReviews";
 import ProfilePage from "./pages/portal/Profile";
-import CreateReviewPage from "./pages/portal/CreateReview";
-import OTPPage from "./pages/portal/OTP";
+import AboutUsPage from "./pages/AboutUs";
 
 const LoginPage = lazy(() => import("@/pages/portal/Login"));
 const SignUpPage = lazy(() => import("@/pages/portal/SignUp"));
 const ContactUsPage = lazy(() => import("@/pages/ContactUs"));
+const CreateReviewPage = lazy(() => import("@/pages/portal/CreateReview"));
 
 const appRoutes: RouteObject[] = [
   {
@@ -21,6 +21,14 @@ const appRoutes: RouteObject[] = [
     element: (
       <Suspense fallback={<FullpageLoader />}>
         <ContactUsPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/about",
+    element: (
+      <Suspense fallback={<FullpageLoader />}>
+        <AboutUsPage />
       </Suspense>
     ),
   },
@@ -48,14 +56,6 @@ const appRoutes: RouteObject[] = [
         element: (
           <Suspense fallback={<FullpageLoader />}>
             <SignUpPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: "/portal/otp",
-        element: (
-          <Suspense fallback={<FullpageLoader />}>
-            <OTPPage />
           </Suspense>
         ),
       },

@@ -3,19 +3,19 @@ import { SignUpSchema } from "@/schema/auth";
 import FormInput from "@/components/FormInput";
 import { useSignupMutation } from "@/services/auth";
 import FormButton from "@/components/FormButton";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import config from "@/config";
+import OTPForm from "../../Login/OTPForm";
+import { useState } from "react";
+import { Checkbox } from "antd";
 
 const SignUpForm = () => {
-  const [signup, { isLoading, isError, isSuccess, data }] = useSignupMutation();
-  const navigate = useNavigate();
+  const [signup, { isLoading, isError, isSuccess }] = useSignupMutation();
+  const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    if (isSuccess) navigate(`${config.navigation.otp}`);
-  }, [isSuccess]);
-
-  return (
+  return isSuccess ? (
+    <OTPForm email={email} />
+  ) : (
     <Formik
       initialValues={{
         email: "",
@@ -26,6 +26,7 @@ const SignUpForm = () => {
       }}
       validationSchema={SignUpSchema}
       onSubmit={(values) => {
+        setEmail(values.email);
         signup(values);
       }}
     >
@@ -93,6 +94,14 @@ const SignUpForm = () => {
             helperText={touched.mobile && errors.mobile ? errors.mobile : ""}
             error={touched.mobile && errors.mobile ? true : false}
           />
+
+          <Checkbox className="py-2">
+            <span className="text-xs">
+              I agree to the{" "}
+              <span className="text-blue-500">terms and conditions</span> and
+              <span className="text-blue-500"> privacy policy</span>
+            </span>
+          </Checkbox>
 
           {isError && <div className="text-red-400">Failed to signup</div>}
           <FormButton loading={isLoading} type="submit">

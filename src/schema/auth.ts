@@ -19,6 +19,7 @@ export const SignUpSchema = yup.object().shape({
   mobile: yup.string().required("Mobile is required"),
 });
 
+
 export const OTPSchema = yup.object().shape({
   otp: yup
     .string()

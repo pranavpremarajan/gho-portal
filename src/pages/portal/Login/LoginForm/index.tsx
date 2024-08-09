@@ -3,19 +3,18 @@ import { LoginSchema } from "@/schema/auth";
 import FormInput from "@/components/FormInput";
 import { useLoginMutation } from "@/services/auth";
 import FormButton from "@/components/FormButton";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import config from "@/config";
+import OTPForm from "../OTPForm";
 
 const LoginForm = () => {
   const [login, { isLoading, isSuccess }] = useLoginMutation();
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    if (isSuccess) navigate(config.navigation.otp);
-  }, [isSuccess]);
-
-  return (
+  return isSuccess ? (
+    <OTPForm email={email} />
+  ) : (
     <Formik
       initialValues={{
         email: "",
@@ -23,6 +22,7 @@ const LoginForm = () => {
       }}
       validationSchema={LoginSchema}
       onSubmit={(values) => {
+        setEmail(values.email);
         login(values);
       }}
     >
@@ -61,7 +61,9 @@ const LoginForm = () => {
 
           <div className="text-xs py-2">
             Dont have an account?{" "}
-            <span className="font-bold cursor-pointer"><Link to={config.navigation.signup}>Sign Up</Link></span>
+            <span className="font-bold cursor-pointer">
+              <Link to={config.navigation.signup}>Sign Up</Link>
+            </span>
           </div>
         </Form>
       )}

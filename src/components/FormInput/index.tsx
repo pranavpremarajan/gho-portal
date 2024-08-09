@@ -29,8 +29,12 @@ const FormInput = ({
 }: FormInputProps) => {
   return (
     <div className="my-2">
-      <label htmlFor={id} className="block mb-1 text-gray-600 text-sm font-bold" dir={direction}>
-        {label}
+      <label
+        htmlFor={id}
+        className="block mb-1 text-gray-600 text-sm font-bold"
+        dir={direction}
+      >
+        {label} {required && "*"}
       </label>
       <Input
         type={type}
