@@ -82,7 +82,7 @@ const CreateReviewPage = () => {
           <div className="text-xs text-gray-800">
             Add a voice record (optional)
           </div>
-          <AudioRecorder />
+          <AudioRecorder onChange={setRecordedMedicalSummary}/>
         </div>
 
         <AddMedicalSummaryModal
@@ -274,9 +274,9 @@ const CreateReviewPage = () => {
           occupation: "",
         }}
         validationSchema={CreateReviewSchema}
-        onSubmit={(values) => {}}
+        onSubmit={() => {}}
       >
-        {({ errors, touched, values, handleChange, handleSubmit }) => (
+        {({ errors, touched, handleChange, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <div className="w-full grid xl:grid-cols-2 gap-4">
               <div>

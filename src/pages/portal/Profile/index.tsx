@@ -2,23 +2,37 @@ import FormButton from "@/components/FormButton";
 import FormInput from "@/components/FormInput";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { ChangePasswordSchema } from "@/schema/auth";
+import { UpdateProfileSchema } from "@/schema/user";
+import { useUpdateUserProfileMutation } from "@/services/user";
 import { Formik } from "formik";
 import { Form } from "react-router-dom";
 
 const ProfilePage = () => {
+  const [updateProfile, { isLoading }] = useUpdateUserProfileMutation();
+
   return (
     <DashboardLayout title="Profile">
       <div className="w-full grid xl:grid-cols-2 gap-4">
         <div className="bg-white shadow w-full p-10">
           <Formik
             initialValues={{
-              email: "",
+              lastname: "",
+              firstname: "",
+              country: "",
+              phone: "",
+              addressLine1: "",
+              addressLine2: "",
+              city: "",
+              state: "",
+              zipCode: "",
             }}
-            validationSchema={{}}
-            onSubmit={() => {}}
+            validationSchema={UpdateProfileSchema}
+            onSubmit={(values) => {
+              updateProfile(values);
+            }}
           >
-            {({}) => (
-              <Form>
+            {({ handleSubmit, touched, errors, handleChange }) => (
+              <Form onSubmit={handleSubmit}>
                 <div className="text-xl font-bold">Profile</div>
                 <FormInput
                   id="lastname"
@@ -26,6 +40,11 @@ const ProfilePage = () => {
                   placeholder="Last/Sur Name"
                   label="Last/Sur Name"
                   type="text"
+                  onChange={handleChange}
+                  helperText={
+                    touched.lastname && errors.lastname ? errors.lastname : ""
+                  }
+                  error={touched.lastname && errors.lastname ? true : false}
                 />
                 <FormInput
                   id="firstname"
@@ -33,6 +52,13 @@ const ProfilePage = () => {
                   placeholder="First Name"
                   label="First Name"
                   type="text"
+                  onChange={handleChange}
+                  helperText={
+                    touched.firstname && errors.firstname
+                      ? errors.firstname
+                      : ""
+                  }
+                  error={touched.firstname && errors.firstname ? true : false}
                 />
 
                 <div className="grid gird-cols-1 md:grid-cols-2 gap-2">
@@ -42,6 +68,11 @@ const ProfilePage = () => {
                     placeholder="Country"
                     label="Country"
                     type="text"
+                    onChange={handleChange}
+                    helperText={
+                      touched.country && errors.country ? errors.country : ""
+                    }
+                    error={touched.country && errors.country ? true : false}
                   />
                   <FormInput
                     id="phone"
@@ -49,14 +80,45 @@ const ProfilePage = () => {
                     placeholder="Phone"
                     label="Phone"
                     type="text"
+                    onChange={handleChange}
+                    helperText={
+                      touched.phone && errors.phone ? errors.phone : ""
+                    }
+                    error={touched.phone && errors.phone ? true : false}
                   />
                 </div>
                 <FormInput
-                  id="address"
-                  name="address"
-                  placeholder="Address"
-                  label="Address"
+                  id="addressLine1"
+                  name="addressLine1"
+                  placeholder="Address Line 1"
+                  label="Address Line 1"
                   type="text"
+                  onChange={handleChange}
+                  helperText={
+                    touched.addressLine1 && errors.addressLine1
+                      ? errors.addressLine1
+                      : ""
+                  }
+                  error={
+                    touched.addressLine1 && errors.addressLine1 ? true : false
+                  }
+                />
+
+                <FormInput
+                  id="addressLine2"
+                  name="addressLine2"
+                  placeholder="Address Line 2"
+                  label="Address Line 2"
+                  type="text"
+                  onChange={handleChange}
+                  helperText={
+                    touched.addressLine2 && errors.addressLine2
+                      ? errors.addressLine2
+                      : ""
+                  }
+                  error={
+                    touched.addressLine2 && errors.addressLine2 ? true : false
+                  }
                 />
 
                 <FormInput
@@ -65,6 +127,9 @@ const ProfilePage = () => {
                   placeholder="City"
                   label="City"
                   type="text"
+                  onChange={handleChange}
+                  helperText={touched.city && errors.city ? errors.city : ""}
+                  error={touched.city && errors.city ? true : false}
                 />
 
                 <div className="grid gird-cols-1 md:grid-cols-2 gap-2">
@@ -74,16 +139,28 @@ const ProfilePage = () => {
                     placeholder="State"
                     label="State"
                     type="text"
+                    onChange={handleChange}
+                    helperText={
+                      touched.state && errors.state ? errors.state : ""
+                    }
+                    error={touched.state && errors.state ? true : false}
                   />
                   <FormInput
-                    id="zip"
-                    name="zip"
+                    id="zipCode"
+                    name="zipCode"
                     placeholder="Zip/Postal Code"
                     label="Zip/Postal Code"
                     type="text"
+                    onChange={handleChange}
+                    helperText={
+                      touched.zipCode && errors.zipCode ? errors.zipCode : ""
+                    }
+                    error={touched.zipCode && errors.zipCode ? true : false}
                   />
                 </div>
-                <FormButton type="submit">Update Profile</FormButton>
+                <FormButton type="submit" loading={isLoading}>
+                  Update Profile
+                </FormButton>
               </Form>
             )}
           </Formik>

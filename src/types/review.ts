@@ -1,6 +1,7 @@
 export interface Review {
-  firstname: string;
-  lastname: string;
-  status: string;
-  gender: string;
+  id: string;
+  fn: string;
+  ln: string;
+  stn: string;
+  sx: string;
 }

@@ -4,19 +4,25 @@ import FormButton from "@/components/FormButton";
 import { useVerifyOTPMutation } from "@/services/auth";
 import { useNavigate } from "react-router-dom";
 import config from "@/config";
+import { loginSuccess } from "@/redux/features/authSlice";
 
 interface OTPFormProps {
   email: string;
+  otp: string; //TODO Temporary setup. To be removed
 }
 
 const OTPForm = (props: OTPFormProps) => {
-  const [verifyOtp, { isLoading, isSuccess }] = useVerifyOTPMutation();
+  const [verifyOtp, { isLoading, isSuccess, data }] = useVerifyOTPMutation();
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState("");
 
   useEffect(() => {
-    if (isSuccess) navigate(config.navigation.portal);
+    if (isSuccess && data["Status"] === 1) {
+      localStorage.setItem("token", data["Data"][0][0].tkn);
+      loginSuccess(data["Data"][0][0]);
+      navigate(config.navigation.portal);
+    }
   }, [isSuccess]);
 
   const handleVerifyButtonClick = () => {
@@ -32,6 +38,7 @@ const OTPForm = (props: OTPFormProps) => {
       <div className="text-xs font-gray-500 mx-3 my-2">
         An OTP has been sent to {props.email}
       </div>
+      <div>{props.otp}</div>
       <div className="flex justify-center py-2">
         <OtpInput
           value={otp}

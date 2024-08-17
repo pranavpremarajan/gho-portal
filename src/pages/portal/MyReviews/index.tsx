@@ -1,13 +1,20 @@
 import DashboardLayout from "@/layouts/DashboardLayout";
-import { useGetMyReviewsQuery } from "@/services/review";
+import { useGetMyReviewsMutation } from "@/services/review";
 import FullpageLoader from "@/components/FullpageLoader";
 import { Link } from "react-router-dom";
 import config from "@/config";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import ReviewCard from "./ReviewCard";
+import { useEffect } from "react";
+import { Review } from "@/types/review";
 
 const MyReviewsPage = () => {
-  const { isLoading } = useGetMyReviewsQuery({});
+  const [getMyReviews, { isLoading, data }] = useGetMyReviewsMutation();
+
+  useEffect(() => {
+    getMyReviews({});
+  }, []);
+
   return (
     <DashboardLayout
       title="My Reviews"
@@ -22,7 +29,7 @@ const MyReviewsPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10">
         <Link to={config.navigation.createReview}>
-          <div className="bg-white hover:scale-105 duration-100 w-full h-full flex items-center justify-center min-h-[250px]">
+          <div className="bg-slate-100 hover:scale-105 duration-100 w-full h-full flex items-center justify-center min-h-[250px]">
             <div>
               <div className="flex justify-center">
                 <div className="bg-blue-100 rounded-full p-5 h-20 w-20">
@@ -40,11 +47,9 @@ const MyReviewsPage = () => {
           </div>
         </Link>
 
-        <ReviewCard
-          review={{
-            caseID: "7854622163",
-          }}
-        />
+        {(data?.["Data"]?.[0] ?? []).map((review: Review, index: number) => (
+          <ReviewCard key={index} reviewNo={index + 1} review={review} />
+        ))}
       </div>
 
       {isLoading && <FullpageLoader />}

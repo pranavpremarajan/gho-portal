@@ -4,9 +4,13 @@ import {
   StopCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-const AudioRecorder: React.FC = () => {
+interface AudioRecorderProps {
+  onChange?: (url: string) => void;
+}
+
+const AudioRecorder = ({ onChange }: AudioRecorderProps) => {
   const [recordedUrl, setRecordedUrl] = useState<string>("");
   const mediaStream = useRef<MediaStream | null>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
@@ -34,6 +38,7 @@ const AudioRecorder: React.FC = () => {
         const recordedBlob = new Blob(chunks.current, { type: "audio/webm" });
         const url = URL.createObjectURL(recordedBlob);
         setRecordedUrl(url);
+        onChange && onChange(url);
         setRecording(false);
         setPlaying(false);
         chunks.current = [];
@@ -119,7 +124,11 @@ const AudioRecorder: React.FC = () => {
           </div>
         )}
 
-        {!recordedUrl && !recording && <div className="text-xs text-center my-2 text-gray-400">No voice record added</div>}
+        {!recordedUrl && !recording && (
+          <div className="text-xs text-center my-2 text-gray-400">
+            No voice record added
+          </div>
+        )}
       </div>
     </>
   );

@@ -4,14 +4,13 @@ import appRoutes from "./appRoutes";
 import store from "@/redux/store";
 import "./i18n";
 import "./App.css";
-import "./styles/fonts.css";
 import { useTranslation } from "react-i18next";
 
 const router = createBrowserRouter(appRoutes);
 
 const App = () => {
   const { i18n } = useTranslation();
-  i18n.changeLanguage("ar");
+  i18n.changeLanguage("en");
 
   return (
     <Provider store={store}>

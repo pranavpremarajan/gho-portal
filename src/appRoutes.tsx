@@ -5,6 +5,8 @@ import { RouteObject } from "react-router-dom";
 import MyReviewsPage from "./pages/portal/MyReviews";
 import ProfilePage from "./pages/portal/Profile";
 import AboutUsPage from "./pages/AboutUs";
+import TelemedicinePage from "./pages/Telemedicine";
+import ServicesPage from "./pages/Services";
 
 const LoginPage = lazy(() => import("@/pages/portal/Login"));
 const SignUpPage = lazy(() => import("@/pages/portal/SignUp"));
@@ -29,6 +31,22 @@ const appRoutes: RouteObject[] = [
     element: (
       <Suspense fallback={<FullpageLoader />}>
         <AboutUsPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/telemedicine",
+    element: (
+      <Suspense fallback={<FullpageLoader />}>
+        <TelemedicinePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/services",
+    element: (
+      <Suspense fallback={<FullpageLoader />}>
+        <ServicesPage />
       </Suspense>
     ),
   },

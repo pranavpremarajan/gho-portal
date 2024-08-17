@@ -9,11 +9,11 @@ import config from "@/config";
 import OTPForm from "../OTPForm";
 
 const LoginForm = () => {
-  const [login, { isLoading, isSuccess }] = useLoginMutation();
+  const [login, { isLoading, isSuccess, data }] = useLoginMutation();
   const [email, setEmail] = useState("");
 
-  return isSuccess ? (
-    <OTPForm email={email} />
+  return isSuccess && data["Status"] === 1 ? (
+    <OTPForm email={email} otp={data?.Data[0][0].Otp} />
   ) : (
     <Formik
       initialValues={{

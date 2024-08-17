@@ -5,10 +5,31 @@ export const reviewApi = createApi({
   reducerPath: "reviewApi",
   baseQuery: fetchBaseQuery({ baseUrl: config.env.baseUrl }),
   endpoints: (builder) => ({
-    getMyReviews: builder.query({
-      query: () => `/reviews`,
+    getMyReviews: builder.mutation({
+      query: () => ({
+        url: "/",
+        method: "POST",
+        body: {
+          Token: localStorage.getItem("token"),
+          Prokey: "",
+          Tags: [
+            {
+              T: "Action",
+              V: "CASELIST",
+            },
+            {
+              T: "src",
+              V: "WEB",
+            },
+            {
+              T: "c1",
+              V: "",
+            },
+          ],
+        },
+      }),
     }),
   }),
 });
 
-export const { useGetMyReviewsQuery } = reviewApi;
+export const { useGetMyReviewsMutation } = reviewApi;

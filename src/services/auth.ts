@@ -24,7 +24,7 @@ export const authApi = createApi({
 
             {
               T: "Action",
-              V: "LOGIN",
+              V: "SIGNIN",
             },
             {
               T: "src",

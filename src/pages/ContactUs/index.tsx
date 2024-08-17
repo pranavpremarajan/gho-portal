@@ -114,7 +114,10 @@ const ContactUsPage = () => {
         <div className="flex lg:items-center h-full p-10 pb-0">
           <div className="text-6xl font-bold max-w-xl" dir={i18n.dir()}>
             {t("contactPageHeaderTitle")}
-            <div className="text-xl text-gray-400 my-10 font-medium max-w-lg" dir={i18n.dir()}>
+            <div
+              className="text-xl text-gray-400 my-10 font-medium max-w-lg"
+              dir={i18n.dir()}
+            >
               {t("contactPageHeaderSubtitle")}
             </div>
           </div>
@@ -129,11 +132,13 @@ const ContactUsPage = () => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "right bottom",
         }}
-        
       >
         <Container className="hidden xl:block">
           <div className="flex lg:items-center h-full py-10">
-            <div className="text-6xl font-bold  sm:max-w- xl:max-w-sm lg:max-w-xl" dir={i18n.dir()}>
+            <div
+              className="text-6xl font-bold  sm:max-w- xl:max-w-sm lg:max-w-xl"
+              dir={i18n.dir()}
+            >
               {t("contactPageHeaderTitle")}
               <div
                 className="text-xl text-gray-400 my-10 font-medium max-w-lg"

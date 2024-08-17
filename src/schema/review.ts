@@ -1,4 +1,3 @@
-import { specialities } from "@/pages/portal/CreateReview/constants";
 import * as yup from "yup";
 
 export const AddMedicationSchema = yup.object().shape({

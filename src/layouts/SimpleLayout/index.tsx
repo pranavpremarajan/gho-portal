@@ -14,7 +14,7 @@ const SimpleLayout = ({ children }: SimpleLayoutProps) => {
   }, [location.pathname]);
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-white">
       <Navbar />
       {children}
       <Footer />
