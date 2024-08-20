@@ -1,9 +1,9 @@
 import Container from "@/components/Container";
-import Image from "../../../assets/telemedicine.jpg";
+import Image from "@/assets/Telemedicine Image.png";
 
 const TelemedicineSection = () => {
   return (
-    <Container className="bg-gray-100 py-20">
+    <Container className=" py-20">
       <div className="text-center">
         <div className="text-5xl">
           <span className="text-primary">Telemedicine: </span>

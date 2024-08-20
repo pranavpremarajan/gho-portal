@@ -21,7 +21,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="col-span-2 lg:col-span-3 lg:flex lg:items-end">
+            {/* <div className="col-span-2 lg:col-span-3 lg:flex lg:items-end">
               <form className="w-full">
                 <label htmlFor="UserEmail" className="sr-only">
                   {" "}
@@ -41,7 +41,7 @@ const Footer = () => {
                   </button>
                 </div>
               </form>
-            </div>
+            </div> */}
 
             <div className="col-span-2 sm:col-span-1">
               <p className="font-bold text-gray-900">Services</p>

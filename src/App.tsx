@@ -5,6 +5,7 @@ import store from "@/redux/store";
 import "./i18n";
 import "./App.css";
 import { useTranslation } from "react-i18next";
+import 'animate.css';
 
 const router = createBrowserRouter(appRoutes);
 

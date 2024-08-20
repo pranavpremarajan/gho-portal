@@ -10,11 +10,11 @@ import { useState } from "react";
 import { Checkbox } from "antd";
 
 const SignUpForm = () => {
-  const [signup, { isLoading, isError, isSuccess }] = useSignupMutation();
+  const [signup, { isLoading, isError, isSuccess, data }] = useSignupMutation();
   const [email, setEmail] = useState("");
 
-  return isSuccess ? (
-    <OTPForm email={email} />
+  return isSuccess && data["Status"] === 1 ? (
+    <OTPForm email={email} otp={data?.Data[0][0].Otp} />
   ) : (
     <Formik
       initialValues={{

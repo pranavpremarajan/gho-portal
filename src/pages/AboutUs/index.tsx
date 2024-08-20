@@ -4,19 +4,17 @@ import AboutUsImage3 from "@/assets/About Image3.jpg";
 import Container from "@/components/Container";
 import bannerImg from "@/assets/banner-img.png";
 import Banner from "@/components/Banner";
+import useScrolled from "@/hooks/useScrolled";
 
 const AboutUsPage = () => {
+  const scrollPosition = useScrolled();
+
   return (
     <>
       <SimpleLayout>
         <Banner
           heading="About Us"
-          description="Our mission is to empower patients worldwide by providing
-                    expert medication reviews, insightful second opinions, and
-                    comprehensive peer reviews. We believe in guiding
-                    individuals toward informed health decisions, ensuring they
-                    have peace of mind through our extensive online second
-                    opinion services."
+          description="At Global Health Opinion, we conduct impactful health research and collaborate with governments, NGOs, and academics to improve health systems. We offer expert second opinions and provide rigorous peer review, all to advance global healthcare."
           image={bannerImg}
         />
 
@@ -24,11 +22,24 @@ const AboutUsPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 py-10">
             <div className="flex items-center justify-center">
               <div className="relative">
-                <img src={AboutUsImage2} className="h-[400px] rounded-xl" />
+                <img
+                  src={AboutUsImage2}
+                  className={`h-[400px] rounded-xl ${
+                    scrollPosition > 50
+                      ? "d-block animate__animated animate__fadeInUp"
+                      : "hidden"
+                  }`}
+                />
               </div>
             </div>
 
-            <div className="flex items-center p-10">
+            <div
+              className={`flex items-center p-10 ${
+                scrollPosition > 50
+                  ? "d-block animate__animated animate__fadeIn"
+                  : "hidden"
+              }`}
+            >
               <div>
                 <div className="font-bold pb-3">OUR MISSION</div>
                 <div className="font-bold text-2xl pb-3">
@@ -46,7 +57,13 @@ const AboutUsPage = () => {
 
         <Container className="bg-white">
           <div className="grid grid-cols-1 md:grid-cols-2 py-10">
-            <div className="flex items-center p-10">
+            <div
+              className={`flex items-center p-10 ${
+                scrollPosition > 600
+                  ? "d-block animate__animated animate__fadeIn"
+                  : "hidden"
+              }`}
+            >
               <div>
                 <div className="font-bold pb-3">WHAT WE DO</div>
                 <div className="font-bold text-2xl pb-3">
@@ -66,22 +83,22 @@ const AboutUsPage = () => {
             </div>
 
             <div className="flex items-center justify-center ">
-              <div
-                className="relative"
-                style={{
-                  marginBottom: "150px",
-                }}
-              >
-                <img src={AboutUsImage3} className="h-[400px] rounded-xl" />
-              </div>
+              <img
+                src={AboutUsImage3}
+                className={`h-[400px] rounded-xl ${
+                  scrollPosition > 600
+                    ? "d-block animate__animated animate__fadeInUp"
+                    : "hidden"
+                }`}
+              />
             </div>
           </div>
         </Container>
 
         <Container className="bg-white py-10">
           <svg
-            width="101"
-            height="27"
+            width="50"
+            height="13.5"
             viewBox="0 0 101 27"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -108,8 +125,8 @@ const AboutUsPage = () => {
               stroke-width="3"
             />
           </svg>{" "}
-          <div className="text-center">
-            <div className="font-bold pb-3">OUR COMMITMENT</div>
+          <div className="text-center py-10">
+            <div className="font-bold pb-3 text-gray-600">OUR COMMITMENT</div>
             <div className="font-bold text-2xl pb-3">
               Ensuring Timely, Accurate, and Reliable Health Guidance
             </div>

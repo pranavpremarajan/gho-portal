@@ -1,5 +1,5 @@
 import Container from "@/components/Container";
-import Image from "../../../assets/Untitled-design-2022-10-23T134734_095.png";
+import Image from "@/assets/Untitled-design-2022-10-23T134734_095.png";
 
 const InfoSection3 = () => {
   return (
