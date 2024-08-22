@@ -24,7 +24,7 @@ const DashboardLayout = ({
 }: DashboardLayoutProps) => {
   return (
     <SimpleLayout>
-      <div className="flex min-h-[calc(100vh-150px)]">
+      <div className="flex min-h-[calc(100vh-150px)] bg-gray-100">
         <div className="bg-gray-200 w-full max-w-xs hidden sm:block">
           <Sidebar />
         </div>

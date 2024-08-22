@@ -3,35 +3,61 @@ import FormInput from "@/components/FormInput";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { ChangePasswordSchema } from "@/schema/auth";
 import { UpdateProfileSchema } from "@/schema/user";
-import { useUpdateUserProfileMutation } from "@/services/user";
+import {
+  useGetUserProfileMutation,
+  useUpdateUserProfileMutation,
+} from "@/services/user";
 import { Formik } from "formik";
+import { useEffect, useState } from "react";
 import { Form } from "react-router-dom";
 
 const ProfilePage = () => {
-  const [updateProfile, { isLoading }] = useUpdateUserProfileMutation();
+  const [getUserProfile, { isLoading: getUserProfileLoading, data }] =
+    useGetUserProfileMutation();
+  const [updateUserProfile, { isLoading: updateUserProfileLoading }] =
+    useUpdateUserProfileMutation();
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    getUserProfile({});
+  }, []);
+
+  const profile = data?.data;
+
+  const countries = data?.countries ?? [];
+
+  const initialValues = {
+    lastname: profile?.lastname ?? "",
+    firstname: profile?.firstname ?? "",
+    phone: profile?.phone ?? "",
+    addressLine1: profile?.addressLine1 ?? "",
+    addressLine2: profile?.addressLine2 ?? "",
+    city: profile?.city ?? "",
+    state: profile?.state ?? "",
+    zipCode: profile?.zipCode ?? "",
+    countryId: profile?.countryId ?? "", // Added country
+  };
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+  };
 
   return (
-    <DashboardLayout title="Profile">
+    <DashboardLayout
+      title="Profile"
+      loading={getUserProfileLoading || updateUserProfileLoading}
+    >
       <div className="w-full grid xl:grid-cols-2 gap-4">
         <div className="bg-white shadow w-full p-10">
           <Formik
-            initialValues={{
-              lastname: "",
-              firstname: "",
-              country: "",
-              phone: "",
-              addressLine1: "",
-              addressLine2: "",
-              city: "",
-              state: "",
-              zipCode: "",
-            }}
+            initialValues={initialValues}
             validationSchema={UpdateProfileSchema}
             onSubmit={(values) => {
-              updateProfile(values);
+              updateUserProfile(values);
             }}
+            enableReinitialize={true}
           >
-            {({ handleSubmit, touched, errors, handleChange }) => (
+            {({ handleSubmit, touched, errors, handleChange, values }) => (
               <Form onSubmit={handleSubmit}>
                 <div className="text-xl font-bold">Profile</div>
                 <FormInput
@@ -41,10 +67,12 @@ const ProfilePage = () => {
                   label="Last/Sur Name"
                   type="text"
                   onChange={handleChange}
+                  value={values.lastname}
                   helperText={
                     touched.lastname && errors.lastname ? errors.lastname : ""
                   }
                   error={touched.lastname && errors.lastname ? true : false}
+                  disabled={!isEditing}
                 />
                 <FormInput
                   id="firstname"
@@ -53,27 +81,45 @@ const ProfilePage = () => {
                   label="First Name"
                   type="text"
                   onChange={handleChange}
+                  value={values.firstname}
                   helperText={
                     touched.firstname && errors.firstname
                       ? errors.firstname
                       : ""
                   }
                   error={touched.firstname && errors.firstname ? true : false}
+                  disabled={!isEditing}
                 />
 
-                <div className="grid gird-cols-1 md:grid-cols-2 gap-2">
-                  <FormInput
-                    id="country"
-                    name="country"
-                    placeholder="Country"
-                    label="Country"
-                    type="text"
-                    onChange={handleChange}
-                    helperText={
-                      touched.country && errors.country ? errors.country : ""
-                    }
-                    error={touched.country && errors.country ? true : false}
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="mb-4">
+                    <label
+                      htmlFor="countryId"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Country
+                    </label>
+                    <select
+                      id="countryId"
+                      name="countryId"
+                      onChange={handleChange}
+                      value={values.countryId}
+                      disabled={!isEditing}
+                      className="w-full border-gray-100"
+                    >
+                      {countries.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                    {touched.countryId && errors.countryId && (
+                      <p className="mt-2 text-sm text-red-600">
+                        {errors.countryId}
+                      </p>
+                    )}
+                  </div>
+
                   <FormInput
                     id="phone"
                     name="phone"
@@ -81,10 +127,12 @@ const ProfilePage = () => {
                     label="Phone"
                     type="text"
                     onChange={handleChange}
+                    value={values.phone}
                     helperText={
                       touched.phone && errors.phone ? errors.phone : ""
                     }
                     error={touched.phone && errors.phone ? true : false}
+                    disabled={!isEditing}
                   />
                 </div>
                 <FormInput
@@ -94,6 +142,7 @@ const ProfilePage = () => {
                   label="Address Line 1"
                   type="text"
                   onChange={handleChange}
+                  value={values.addressLine1}
                   helperText={
                     touched.addressLine1 && errors.addressLine1
                       ? errors.addressLine1
@@ -102,6 +151,7 @@ const ProfilePage = () => {
                   error={
                     touched.addressLine1 && errors.addressLine1 ? true : false
                   }
+                  disabled={!isEditing}
                 />
 
                 <FormInput
@@ -111,6 +161,7 @@ const ProfilePage = () => {
                   label="Address Line 2"
                   type="text"
                   onChange={handleChange}
+                  value={values.addressLine2}
                   helperText={
                     touched.addressLine2 && errors.addressLine2
                       ? errors.addressLine2
@@ -119,6 +170,7 @@ const ProfilePage = () => {
                   error={
                     touched.addressLine2 && errors.addressLine2 ? true : false
                   }
+                  disabled={!isEditing}
                 />
 
                 <FormInput
@@ -128,11 +180,13 @@ const ProfilePage = () => {
                   label="City"
                   type="text"
                   onChange={handleChange}
+                  value={values.city}
                   helperText={touched.city && errors.city ? errors.city : ""}
                   error={touched.city && errors.city ? true : false}
+                  disabled={!isEditing}
                 />
 
-                <div className="grid gird-cols-1 md:grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <FormInput
                     id="state"
                     name="state"
@@ -140,10 +194,12 @@ const ProfilePage = () => {
                     label="State"
                     type="text"
                     onChange={handleChange}
+                    value={values.state}
                     helperText={
                       touched.state && errors.state ? errors.state : ""
                     }
                     error={touched.state && errors.state ? true : false}
+                    disabled={!isEditing}
                   />
                   <FormInput
                     id="zipCode"
@@ -152,15 +208,28 @@ const ProfilePage = () => {
                     label="Zip/Postal Code"
                     type="text"
                     onChange={handleChange}
+                    value={values.zipCode}
                     helperText={
                       touched.zipCode && errors.zipCode ? errors.zipCode : ""
                     }
                     error={touched.zipCode && errors.zipCode ? true : false}
+                    disabled={!isEditing}
                   />
                 </div>
-                <FormButton type="submit" loading={isLoading}>
+                <FormButton
+                  type="submit"
+                  loading={updateUserProfileLoading}
+                  disabled={!isEditing}
+                >
                   Update Profile
                 </FormButton>
+                <button
+                  type="button"
+                  onClick={handleEditToggle}
+                  className="mt-4 text-blue-500"
+                >
+                  {!isEditing && "Edit Profile"}
+                </button>
               </Form>
             )}
           </Formik>
@@ -175,7 +244,8 @@ const ProfilePage = () => {
             }}
             validationSchema={ChangePasswordSchema}
             onSubmit={() => {
-              alert("test");
+              // Handle password change here
+              alert("Password change submitted!");
             }}
           >
             {({ errors, touched, values, handleChange, handleSubmit }) => (

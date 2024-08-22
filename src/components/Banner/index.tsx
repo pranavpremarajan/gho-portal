@@ -1,5 +1,3 @@
-// src/components/Banner.tsx
-
 import React from "react";
 import Container from "../Container";
 
@@ -19,10 +17,9 @@ const Banner: React.FC<BannerProps> = ({
   image,
 }) => {
   return (
-    <section className="w-full flex items-center justify-center bg-gray-100">
+    <section className="w-full h-screen flex items-center justify-center bg-gray-100">
       <Container>
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
-          {/* Text Column */}
+        <div className="px-6 flex flex-col md:flex-row items-center justify-between">
           <div className="flex-1 text-center md:text-left mb-8 md:mb-0 my-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary animate__animated animate__fadeInUp">
               {heading}
@@ -40,7 +37,6 @@ const Banner: React.FC<BannerProps> = ({
             )}
           </div>
 
-          {/* Image Column */}
           <div className="flex-1 flex items-end">
             <img
               src={image}

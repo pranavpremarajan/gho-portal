@@ -12,6 +12,7 @@ interface FormInputProps {
   direction?: "rtl" | "ltr" | "auto";
   value?: any;
   onChange?: any;
+  disabled?: boolean;
 }
 
 const FormInput = ({
@@ -25,6 +26,7 @@ const FormInput = ({
   error,
   direction = "auto",
   value,
+  disabled = false,
   ...rest
 }: FormInputProps) => {
   return (
@@ -43,6 +45,8 @@ const FormInput = ({
         placeholder={placeholder}
         required={required}
         dir={direction}
+        value={value}
+        disabled={disabled}
         {...rest}
       />
       <div className={`text-xs my-2 ${error ? "text-red-600" : ""}`}>
